@@ -13,9 +13,15 @@ export const buildAudienceFromNL = async (
     contents: buildAudienceUserPrompt(nlQuery),
     config: {
       systemInstruction: buildAudienceSystemPrompt(),
+      responseMimeType: "application/json",
       maxOutputTokens: 1000,
+      thinkingConfig: {
+        thinkingBudget: 0,
+      },
     },
   });
+
+  console.dir(response, { depth: null });
 
   const text = response.text;
 
@@ -25,5 +31,15 @@ export const buildAudienceFromNL = async (
 
   const cleaned = text.replace(/```json|```/g, "").trim();
 
-  return JSON.parse(cleaned) as AudienceBuilderResponse;
+  console.log("AUDIENCE TEXT:");
+  console.log(cleaned);
+
+  try {
+    return JSON.parse(cleaned) as AudienceBuilderResponse;
+  } catch (error) {
+    console.error("Failed to parse Audience response:");
+    console.error(cleaned);
+
+    throw new Error("Failed to parse Gemini audience builder response");
+  }
 };
