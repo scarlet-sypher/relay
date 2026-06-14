@@ -14,9 +14,15 @@ export const generateCampaignInsight = async (
     contents: buildInsightUserPrompt(input),
     config: {
       systemInstruction: buildInsightSystemPrompt(),
-      maxOutputTokens: 500,
+      responseMimeType: "application/json",
+      maxOutputTokens: 1000,
+      thinkingConfig: {
+        thinkingBudget: 0,
+      },
     },
   });
+
+  console.dir(response, { depth: null });
 
   const text = response.text;
 
@@ -26,5 +32,20 @@ export const generateCampaignInsight = async (
 
   const cleaned = text.replace(/```json|```/g, "").trim();
 
-  return JSON.parse(cleaned) as InsightResponse;
+  console.log("INSIGHT TEXT:");
+  console.log(cleaned);
+
+  try {
+    return JSON.parse(cleaned) as InsightResponse;
+  } catch (error) {
+    console.error("Failed to parse Insight response:");
+    console.error(cleaned);
+
+    return {
+      narrative:
+        "Campaign completed successfully but AI insight generation failed.",
+      recommendedAction:
+        "Review campaign analytics manually and retry insight generation.",
+    };
+  }
 };

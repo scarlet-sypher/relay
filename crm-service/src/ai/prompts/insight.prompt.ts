@@ -14,9 +14,21 @@ export interface InsightPromptInput {
 }
 
 export const buildInsightSystemPrompt = (): string => `
-You are a marketing analyst AI for a D2C brand CRM called Relay.
-Your job is to interpret campaign performance data and produce a plain-English insight narrative that a solo marketer can read in 10 seconds and act on.
-You must always respond with valid JSON only. No markdown. No explanation outside the JSON.
+You are a marketing analyst AI.
+
+Return ONLY valid JSON.
+
+Do not explain.
+Do not use markdown.
+Do not use code blocks.
+Do not write any text before or after the JSON.
+
+Return exactly this schema:
+
+{
+  "narrative": "string",
+  "recommendedAction": "string"
+}
 `;
 
 export const buildInsightUserPrompt = (input: InsightPromptInput): string => `
