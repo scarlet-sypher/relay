@@ -14,9 +14,15 @@ export const generateCampaignCopilot = async (
     contents: buildCopilotUserPrompt(input),
     config: {
       systemInstruction: buildCopilotSystemPrompt(),
+      responseMimeType: "application/json",
       maxOutputTokens: 1000,
+      thinkingConfig: {
+        thinkingBudget: 0,
+      },
     },
   });
+
+  console.dir(response, { depth: null });
 
   const text = response.text;
 
@@ -26,5 +32,14 @@ export const generateCampaignCopilot = async (
 
   const cleaned = text.replace(/```json|```/g, "").trim();
 
-  return JSON.parse(cleaned) as CopilotResponse;
+  console.log("COPILOT TEXT:");
+  console.log(cleaned);
+
+  try {
+    return JSON.parse(cleaned) as CopilotResponse;
+  } catch (error) {
+    console.error("Failed to parse Copilot response:");
+    console.error(cleaned);
+    throw new Error("Failed to parse Gemini copilot response");
+  }
 };
