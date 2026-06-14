@@ -6,7 +6,7 @@ export const CreateCampaignSchema = z.object({
   channel: z.enum(["EMAIL", "SMS", "WHATSAPP"]),
   messageBody: z.string().min(1),
   subjectLine: z.string().optional(),
-  scheduledAt: z.string().datetime().optional(),
+  scheduledAt: z.string().datetime().nullable().optional(),
 });
 
 export const LaunchCampaignSchema = z.object({
