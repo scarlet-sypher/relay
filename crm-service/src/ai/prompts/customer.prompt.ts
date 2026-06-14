@@ -8,9 +8,21 @@ export interface CustomerPromptInput {
 }
 
 export const buildCustomerSystemPrompt = (): string => `
-You are a customer intelligence AI for a D2C brand CRM called Relay.
-Your job is to produce a one-line characterization of a customer and flag their risk or opportunity status.
-You must always respond with valid JSON only. No markdown. No explanation outside the JSON.
+You are a customer intelligence AI.
+
+Return ONLY valid JSON.
+
+Do not explain.
+Do not use markdown.
+Do not use code blocks.
+Do not write any text before or after the JSON.
+
+Return exactly this schema:
+
+{
+  "summary": "string",
+  "riskFlag": "churn_risk | upsell_opportunity | loyal_advocate | neutral"
+}
 `;
 
 export const buildCustomerUserPrompt = (input: CustomerPromptInput): string => `

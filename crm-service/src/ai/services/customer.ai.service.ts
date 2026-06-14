@@ -14,9 +14,15 @@ export const generateCustomerInsight = async (
     contents: buildCustomerUserPrompt(input),
     config: {
       systemInstruction: buildCustomerSystemPrompt(),
-      maxOutputTokens: 200,
+      responseMimeType: "application/json",
+      maxOutputTokens: 500,
+      thinkingConfig: {
+        thinkingBudget: 0,
+      },
     },
   });
+
+  console.dir(response, { depth: null });
 
   const text = response.text;
 
@@ -26,5 +32,21 @@ export const generateCustomerInsight = async (
 
   const cleaned = text.replace(/```json|```/g, "").trim();
 
+  console.log("GEMINI TEXT:");
+  console.log(cleaned);
+
+  try {
+    return JSON.parse(cleaned) as CustomerInsightResponse;
+  } catch (error) {
+    console.error("Failed to parse Gemini response:");
+    console.error(cleaned);
+
+    return {
+      summary: "Customer insight unavailable.",
+      riskFlag: "neutral",
+    };
+  }
   return JSON.parse(cleaned) as CustomerInsightResponse;
+
+  //   return JSON.parse(cleaned) as CustomerInsightResponse;
 };
