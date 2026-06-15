@@ -56,9 +56,9 @@ export const Analytics = () => {
   const avgDelivery =
     analytics.reduce((s, a) => s + parseFloat(a.deliveryRate), 0) /
     analytics.length;
-  const avgClick =
-    analytics.reduce((s, a) => s + parseFloat(a.clickRate), 0) /
-    analytics.length;
+  //   const avgClick =
+  //     analytics.reduce((s, a) => s + parseFloat(a.clickRate), 0) /
+  //     analytics.length;
   const totalSent = analytics.reduce((s, a) => s + a.totalSent, 0);
   const totalClicks = analytics.reduce((s, a) => s + a.totalClicked, 0);
 

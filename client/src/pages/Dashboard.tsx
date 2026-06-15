@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Users,
   Send,
@@ -6,7 +6,6 @@ import {
   BarChart3,
   TrendingUp,
   TrendingDown,
-  Activity,
   RefreshCw,
   ArrowRight,
 } from "lucide-react";
@@ -33,7 +32,7 @@ import {
 } from "../utils";
 import { CAMPAIGN_STATUS_COLORS, CHANNEL_LABELS } from "../constants";
 import { StatusBadge } from "../common/StatusBadge";
-import { cn } from "../utils";
+// import { cn } from "../utils";
 
 interface KpiCardProps {
   label: string;
@@ -92,7 +91,7 @@ export const Dashboard = () => {
   const { analytics, loading: aLoading } = useAnalytics();
   const [lastRefresh, setLastRefresh] = useState(new Date());
 
-  const loading = cLoading || campLoading || segLoading || aLoading;
+  // const loading = cLoading || campLoading || segLoading || aLoading;
 
   const activeCampaigns = campaigns.filter(
     (c) => c.status === "SENDING" || c.status === "COMPLETING",

@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, Users, Filter, Calendar } from "lucide-react";
+import { ArrowLeft, Users, Filter } from "lucide-react";
 import { useSegment } from "../hooks/useSegments";
 import { PageLoader } from "../common/PageLoader";
 import { ErrorState } from "../common/ErrorState";

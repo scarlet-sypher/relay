@@ -10,12 +10,7 @@ import { EmptyState } from "../common/EmptyState";
 import { SearchInput } from "../common/SearchInput";
 import { Pagination } from "../common/Pagination";
 import { StatusBadge } from "../common/StatusBadge";
-import {
-  formatCurrency,
-  formatDate,
-  formatRelativeTime,
-  getInitials,
-} from "../utils";
+import { formatCurrency, formatRelativeTime, getInitials } from "../utils";
 import { CHANNEL_COLORS, CHANNEL_LABELS } from "../constants";
 import type { CreateCustomerPayload, Channel } from "../types/api.types";
 

@@ -2,11 +2,9 @@ import { useParams, Link } from "react-router-dom";
 import {
   ArrowLeft,
   Send,
-  Users,
   Rocket,
   CheckCircle,
   XCircle,
-  Eye,
   MousePointer,
 } from "lucide-react";
 import {
