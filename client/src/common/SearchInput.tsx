@@ -21,7 +21,7 @@ export const SearchInput = ({
       value={value}
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
-      className="input-base pl-9 pr-8"
+      className="input-base !pl-9 !pr-8"
     />
     {value && (
       <button

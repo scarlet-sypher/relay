@@ -42,6 +42,10 @@ const NotFound = lazy(() =>
   import("../pages/NotFound").then((m) => ({ default: m.NotFound })),
 );
 
+const LandingPage = lazy(() =>
+  import("../pages/LandingPage").then((m) => ({ default: m.LandingPage })),
+);
+
 export const AppRouter = () => (
   <BrowserRouter>
     <ErrorBoundary>
@@ -53,8 +57,12 @@ export const AppRouter = () => (
         }
       >
         <Routes>
+          {/* Standalone Landing Page Route */}
+          <Route path="/" element={<LandingPage />} />
+          
+          {/* Main App Layout Routes */}
           <Route element={<AppLayout />}>
-            <Route index element={<Dashboard />} />
+            <Route path="dashboard" element={<Dashboard />} />
             <Route path="customers" element={<Customers />} />
             <Route path="customers/:id" element={<CustomerDetail />} />
             <Route path="segments" element={<Segments />} />
