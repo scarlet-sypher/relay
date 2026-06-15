@@ -1,7 +1,10 @@
-import Dashboard from "./pages/Dashboard";
+import { AppRouter } from "./routes/AppRouter";
+import { ToastProvider } from "./contexts/ToastContext";
 
-const App = () => {
-  return <Dashboard />;
-};
+const App = () => (
+  <ToastProvider>
+    <AppRouter />
+  </ToastProvider>
+);
 
 export default App;
