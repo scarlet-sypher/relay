@@ -34,7 +34,11 @@ export const campaignService = {
     const segment = await segmentRepository.findById(campaign.segmentId);
     if (!segment) throw new Error("Segment not found");
 
-    const rules = segment.filterRules as FilterRules;
+    if (!segment.filterRules) {
+      throw new Error("Segment filter rules missing");
+    }
+
+    const rules = segment.filterRules as unknown as FilterRules;
     const customerIds = await getCustomerIdsForSegment(rules);
 
     if (customerIds.length === 0) {

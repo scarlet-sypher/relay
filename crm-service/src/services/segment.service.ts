@@ -10,7 +10,17 @@ export const segmentService = {
   async createSegment(data: CreateSegmentDTO) {
     const rules = data.filterRules as FilterRules;
     const { count } = await executeSegmentFilter(rules);
-    return segmentRepository.create({ ...data, customerCount: count });
+    return segmentRepository.create({
+      name: data.name,
+      filterRules: data.filterRules,
+      customerCount: count,
+      ...(data.description !== undefined && {
+        description: data.description,
+      }),
+      ...(data.nlQuery !== undefined && {
+        nlQuery: data.nlQuery,
+      }),
+    });
   },
 
   async previewSegment(filterRules: FilterRules) {
