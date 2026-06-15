@@ -1,8 +1,7 @@
 import api from "./axios";
-import type { HealthResponse } from "../types/api.types";
+import type { ApiResponse, HealthData } from "../types/api.types";
 
-export const getHealthStatus = async (): Promise<HealthResponse> => {
-  const response = await api.get<HealthResponse>("/health");
-
-  return response.data;
+export const getHealth = async (): Promise<ApiResponse<HealthData>> => {
+  const res = await api.get<ApiResponse<HealthData>>("/health");
+  return res.data;
 };
