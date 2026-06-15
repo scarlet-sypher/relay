@@ -7,49 +7,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Channel {
-  EMAIL
-  SMS
-  WHATSAPP
-}
-
-enum CampaignStatus {
-  DRAFT
-  SCHEDULED
-  SENDING
-  COMPLETING
-  COMPLETED
-  FAILED
-}
-
-enum CommunicationStatus {
-  QUEUED
-  SENT
-  DELIVERED
-  OPENED
-  READ
-  CLICKED
-  FAILED
-}
-
 model Customer {
-  id               String   @id @default(uuid())
-  externalId       String?  @map("external_id")
-  firstName        String   @map("first_name")
-  lastName         String   @map("last_name")
-  email            String   @unique
+  id               String          @id @default(uuid())
+  externalId       String?         @map("external_id")
+  firstName        String          @map("first_name")
+  lastName         String          @map("last_name")
+  email            String          @unique
   phone            String?
   city             String?
-  preferredChannel Channel  @default(EMAIL) @map("preferred_channel")
-  lastOrderAt      DateTime? @map("last_order_at")
-  totalOrders      Int      @default(0) @map("total_orders")
-  totalSpend       Decimal  @default(0) @map("total_spend") @db.Decimal(12, 2)
-  aiSegmentTags    String[] @map("ai_segment_tags")
-  createdAt        DateTime @default(now()) @map("created_at")
-  updatedAt        DateTime @updatedAt @map("updated_at")
-
-  orders         Order[]
-  communications Communication[]
+  preferredChannel Channel         @default(EMAIL) @map("preferred_channel")
+  lastOrderAt      DateTime?       @map("last_order_at")
+  totalOrders      Int             @default(0) @map("total_orders")
+  totalSpend       Decimal         @default(0) @map("total_spend") @db.Decimal(12, 2)
+  aiSegmentTags    String[]        @map("ai_segment_tags")
+  createdAt        DateTime        @default(now()) @map("created_at")
+  updatedAt        DateTime        @updatedAt @map("updated_at")
+  communications   Communication[]
+  orders           Order[]
 
   @@index([lastOrderAt])
   @@index([totalSpend])
@@ -65,8 +39,7 @@ model Order {
   productCategory String?  @map("product_category")
   channel         String?
   createdAt       DateTime @default(now()) @map("created_at")
-
-  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  customer        Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
 
   @@index([customerId])
   @@index([createdAt])
@@ -74,40 +47,38 @@ model Order {
 }
 
 model Segment {
-  id             String   @id @default(uuid())
+  id             String     @id @default(uuid())
   name           String
   description    String?
-  filterRules    Json     @map("filter_rules")
-  nlQuery        String?  @map("nl_query")
-  customerCount  Int      @default(0) @map("customer_count")
-  isAiDiscovered Boolean  @default(false) @map("is_ai_discovered")
-  createdAt      DateTime @default(now()) @map("created_at")
-  updatedAt      DateTime @updatedAt @map("updated_at")
-  lastUsedAt     DateTime? @map("last_used_at")
-
-  campaigns Campaign[]
+  filterRules    Json       @map("filter_rules")
+  nlQuery        String?    @map("nl_query")
+  customerCount  Int        @default(0) @map("customer_count")
+  isAiDiscovered Boolean    @default(false) @map("is_ai_discovered")
+  createdAt      DateTime   @default(now()) @map("created_at")
+  updatedAt      DateTime   @updatedAt @map("updated_at")
+  lastUsedAt     DateTime?  @map("last_used_at")
+  campaigns      Campaign[]
 
   @@map("segments")
 }
 
 model Campaign {
-  id          String         @id @default(uuid())
-  name        String
-  segmentId   String         @map("segment_id")
-  channel     Channel
-  messageBody String         @map("message_body")
-  subjectLine String?        @map("subject_line")
-  status      CampaignStatus @default(DRAFT)
-  scheduledAt DateTime?      @map("scheduled_at")
-  sentAt      DateTime?      @map("sent_at")
-  completedAt DateTime?      @map("completed_at")
-  aiInsight   String?        @map("ai_insight")
-  createdAt   DateTime       @default(now()) @map("created_at")
-  updatedAt   DateTime       @updatedAt @map("updated_at")
-
-  segment        Segment          @relation(fields: [segmentId], references: [id])
-  communications Communication[]
+  id             String             @id @default(uuid())
+  name           String
+  segmentId      String             @map("segment_id")
+  channel        Channel
+  messageBody    String             @map("message_body")
+  subjectLine    String?            @map("subject_line")
+  status         CampaignStatus     @default(DRAFT)
+  scheduledAt    DateTime?          @map("scheduled_at")
+  sentAt         DateTime?          @map("sent_at")
+  completedAt    DateTime?          @map("completed_at")
+  aiInsight      String?            @map("ai_insight")
+  createdAt      DateTime           @default(now()) @map("created_at")
+  updatedAt      DateTime           @updatedAt @map("updated_at")
   analytics      CampaignAnalytics?
+  segment        Segment            @relation(fields: [segmentId], references: [id])
+  communications Communication[]
 
   @@index([status])
   @@index([segmentId])
@@ -132,9 +103,8 @@ model Communication {
   failureReason    String?             @map("failure_reason")
   createdAt        DateTime            @default(now()) @map("created_at")
   updatedAt        DateTime            @updatedAt @map("updated_at")
-
-  campaign Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
-  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  campaign         Campaign            @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  customer         Customer            @relation(fields: [customerId], references: [id], onDelete: Cascade)
 
   @@index([campaignId])
   @@index([customerId])
@@ -143,20 +113,44 @@ model Communication {
 }
 
 model CampaignAnalytics {
-  id            String   @id @default(uuid())
-  campaignId    String   @unique @map("campaign_id")
-  totalSent     Int      @default(0) @map("total_sent")
-  totalDelivered Int     @default(0) @map("total_delivered")
-  totalFailed   Int      @default(0) @map("total_failed")
-  totalOpened   Int      @default(0) @map("total_opened")
-  totalRead     Int      @default(0) @map("total_read")
-  totalClicked  Int      @default(0) @map("total_clicked")
-  deliveryRate  Decimal  @default(0) @map("delivery_rate") @db.Decimal(5, 2)
-  openRate      Decimal  @default(0) @map("open_rate") @db.Decimal(5, 2)
-  clickRate     Decimal  @default(0) @map("click_rate") @db.Decimal(5, 2)
-  lastUpdatedAt DateTime @default(now()) @map("last_updated_at")
-
-  campaign Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  id             String   @id @default(uuid())
+  campaignId     String   @unique @map("campaign_id")
+  totalSent      Int      @default(0) @map("total_sent")
+  totalDelivered Int      @default(0) @map("total_delivered")
+  totalFailed    Int      @default(0) @map("total_failed")
+  totalOpened    Int      @default(0) @map("total_opened")
+  totalRead      Int      @default(0) @map("total_read")
+  totalClicked   Int      @default(0) @map("total_clicked")
+  deliveryRate   Decimal  @default(0) @map("delivery_rate") @db.Decimal(5, 2)
+  openRate       Decimal  @default(0) @map("open_rate") @db.Decimal(5, 2)
+  clickRate      Decimal  @default(0) @map("click_rate") @db.Decimal(5, 2)
+  lastUpdatedAt  DateTime @default(now()) @map("last_updated_at")
+  campaign       Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
 
   @@map("campaign_analytics")
+}
+
+enum Channel {
+  EMAIL
+  SMS
+  WHATSAPP
+}
+
+enum CampaignStatus {
+  DRAFT
+  SCHEDULED
+  SENDING
+  COMPLETING
+  COMPLETED
+  FAILED
+}
+
+enum CommunicationStatus {
+  QUEUED
+  SENT
+  DELIVERED
+  OPENED
+  READ
+  CLICKED
+  FAILED
 }
