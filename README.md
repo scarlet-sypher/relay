@@ -1,4 +1,3 @@
-```markdown
 # ⚡ Relay — AI-Native Mini CRM for Shopper Engagement
 
 <div align="center">
@@ -599,4 +598,3 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 ⭐ **Star the repository if you found it useful** ⭐
 
 </div>
-```
