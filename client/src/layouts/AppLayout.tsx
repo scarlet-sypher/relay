@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { Topbar, Sidebar } from "../common/Navbar";
+import { Sidebar } from "../common/Navbar";
 import { useState } from "react";
 
 export const AppLayout = () => {
@@ -11,7 +11,7 @@ export const AppLayout = () => {
 
   return (
     <div className="flex flex-col h-screen overflow-hidden bg-[#0d1117]">
-      <Topbar toggleSidebar={toggleSidebar} />
+      {/* <Topbar toggleSidebar={toggleSidebar} /> */}
 
       {/* Main content area */}
       <div className="flex flex-1 min-w-0 overflow-hidden relative">
