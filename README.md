@@ -1,4 +1,4 @@
-# ⚡ Relay — AI-Native Mini CRM for Shopper Engagement
+# ⚡ Relay — AI-Native Mini CRM
 
 <div align="center">
 
@@ -165,9 +165,9 @@ Small brand marketing teams have customer data sitting unused in spreadsheets an
 
 ## 🏗️ Architecture Overview
 
-<!-- TODO: Replace the placeholder image below with your actual architecture flow diagram -->
 <div align="center">
-  <img src="https://via.placeholder.com/1000x500.png?text=System+Architecture+Flow+Diagram+Placeholder" alt="Relay System Architecture Flow Diagram" width="800" />
+
+  <img src="https://github.com/user-attachments/assets/93df3313-0065-43e4-aa6a-a974b45c7bbb" alt="Relay System Architecture Flow Diagram" width="800" />
 </div>
 
 Relay is a monorepo with three independently deployable services.
