@@ -67,11 +67,18 @@ export const LandingPage = () => {
             <span className="text-[1.05rem] font-bold text-[#f0f4ff]">Relay</span>
           </a>
           <ul className="hidden md:flex gap-6 list-none m-0 p-0">
-            <li><a href="#" className="text-[#8892a4] text-[0.85rem] no-underline transition-colors hover:text-[#f0f4ff]">Features</a></li>
-            <li><a href="#" className="text-[#8892a4] text-[0.85rem] no-underline transition-colors hover:text-[#f0f4ff]">How It Works</a></li>
-            <li><a href="#" className="text-[#8892a4] text-[0.85rem] no-underline transition-colors hover:text-[#f0f4ff]">Why Relay</a></li>
-            <li><a href="#" className="text-[#8892a4] text-[0.85rem] no-underline transition-colors hover:text-[#f0f4ff]">Pricing</a></li>
-            <li><a href="#" className="text-[#8892a4] text-[0.85rem] no-underline transition-colors hover:text-[#f0f4ff]">Docs</a></li>
+            <li>
+              <a href="#" target="_blank" rel="noopener noreferrer" className="group relative text-[#8892a4] text-[0.85rem] no-underline transition-all duration-300 hover:text-[#f0f4ff] flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-[#6c63ff]/15 hover:shadow-[0_0_15px_rgba(108,99,255,0.15)]">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 transition-transform duration-300 group-hover:text-[#8b82ff] group-hover:scale-110 group-hover:-rotate-3"><polygon points="5 3 19 12 5 21 5 3" /></svg>
+                Video Demo
+              </a>
+            </li>
+            <li>
+              <a href="#" target="_blank" rel="noopener noreferrer" className="group relative text-[#8892a4] text-[0.85rem] no-underline transition-all duration-300 hover:text-[#f0f4ff] flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-[#6c63ff]/15 hover:shadow-[0_0_15px_rgba(108,99,255,0.15)]">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 transition-transform duration-300 group-hover:text-[#8b82ff] group-hover:scale-110 group-hover:rotate-3"><rect x="3" y="3" width="18" height="18" rx="2" ry="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" /></svg>
+                System Architecture
+              </a>
+            </li>
           </ul>
           <div className="flex items-center gap-3">
             {/* <button className="bg-transparent border-none text-[#8892a4] text-[0.85rem] cursor-pointer hover:text-[#f0f4ff]">Sign in</button> */}
