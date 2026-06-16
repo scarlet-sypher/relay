@@ -76,10 +76,10 @@ export const LandingPage = () => {
           <div className="flex items-center gap-3">
             {/* <button className="bg-transparent border-none text-[#8892a4] text-[0.85rem] cursor-pointer hover:text-[#f0f4ff]">Sign in</button> */}
             <button
-              onClick={handleEnter}
+              onClick={() => window.open("https://github.com/scarlet-sypher/relay", "_blank")}
               className="bg-[#6c63ff] hover:bg-[#8b82ff] hover:scale-[1.03] text-white border-none rounded-lg px-4 py-2 text-[0.85rem] font-semibold cursor-pointer flex items-center gap-1.5 shadow-[0_0_24px_rgba(108,99,255,0.35)] transition-all duration-200"
             >
-              Enter Workspace
+              GitHub
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
             </button>
           </div>

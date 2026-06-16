@@ -56,27 +56,28 @@ export const campaignService = {
         orders: {
           select: { productCategory: true },
           orderBy: { createdAt: "desc" },
-          take: 1
-        }
+          take: 1,
+        },
       },
     });
 
     const resolveMessage = (messageBody: string, customer: any): string => {
       let msg = messageBody.replace(/\[First Name\]/gi, customer.firstName);
-      
-      const lastOrderStr = customer.lastOrderAt 
-        ? new Date(customer.lastOrderAt).toLocaleDateString() 
-        : 'recently';
+
+      const lastOrderStr = customer.lastOrderAt
+        ? new Date(customer.lastOrderAt).toLocaleDateString()
+        : "recently";
       msg = msg.replace(/\[Last Order Date\]/gi, lastOrderStr);
-      
-      const favoriteCat = customer.orders?.[0]?.productCategory || 'our premium products';
+
+      const favoriteCat =
+        customer.orders?.[0]?.productCategory || "our premium products";
       msg = msg.replace(/\[Favorite Category\]/gi, favoriteCat);
-      
+
       // Fallback for old templates
       msg = msg.replace(/{{first_name}}/gi, customer.firstName);
       msg = msg.replace(/{{last_order_date}}/gi, lastOrderStr);
       msg = msg.replace(/{{favorite_product_category}}/gi, favoriteCat);
-      
+
       return msg;
     };
 
@@ -119,7 +120,7 @@ export const campaignService = {
         recipient_address: c.recipientAddress,
         message: c.messageBody,
       })),
-      callback_url: `${ENV.CRM_RECEIPT_URL}/api/receipt`,
+      callback_url: `${ENV.CRM_RECEIPT_URL}`,
     };
 
     try {

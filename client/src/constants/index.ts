@@ -76,6 +76,23 @@ export const SEGMENT_FILTER_OPS = [
   { value: "contains", label: "Contains" },
 ];
 
+export const FILTER_OP_LABELS: Record<string, string> = {
+  eq: "equals",
+  neq: "does not equal",
+  gt: "is greater than",
+  gte: "is greater than or equal to",
+  lt: "is less than",
+  lte: "is less than or equal to",
+  in: "is one of",
+  nin: "is not one of",
+  contains: "contains",
+  not_contains: "does not contain",
+  days_ago_lt: "days ago <",
+  days_ago_lte: "days ago ≤",
+  days_ago_gt: "days ago >",
+  days_ago_gte: "days ago ≥",
+};
+
 export const NAV_ITEMS = [
   { path: "/", label: "Dashboard", icon: "LayoutDashboard" },
   { path: "/customers", label: "Customers", icon: "Users" },

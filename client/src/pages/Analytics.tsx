@@ -63,10 +63,10 @@ export const Analytics = () => {
   const totalClicks = analytics.reduce((s, a) => s + a.totalClicked, 0);
 
   return (
-    <div className="p-6 space-y-6 animate-fade-in">
+    <div className="p-5 space-y-5 animate-fade-in">
       <div>
         <h1 className="page-title">Analytics</h1>
-        <p className="text-sm text-surface-500 mt-0.5">
+        <p className="text-[13px] text-surface-500 mt-0.5">
           Performance across all campaigns
         </p>
       </div>
@@ -79,19 +79,19 @@ export const Analytics = () => {
           { label: "Avg Delivery Rate", value: formatPercent(avgDelivery) },
           { label: "Total Clicks", value: formatNumber(totalClicks) },
         ].map(({ label, value }) => (
-          <div key={label} className="card p-5">
-            <TrendingUp className="w-4 h-4 text-brand-400 mb-3" />
-            <p className="text-2xl font-bold text-surface-50">{value}</p>
-            <p className="text-xs text-surface-500 mt-1">{label}</p>
+          <div key={label} className="card p-4">
+            <TrendingUp className="w-3.5 h-3.5 text-brand-400 mb-2" />
+            <p className="text-xl font-bold text-surface-50">{value}</p>
+            <p className="text-[11px] text-surface-500 mt-1">{label}</p>
           </div>
         ))}
       </div>
 
       {/* Charts */}
-      <div className="grid lg:grid-cols-2 gap-6">
-        <div className="card p-5">
-          <h2 className="section-title mb-4">Delivery Rate by Campaign</h2>
-          <ResponsiveContainer width="100%" height={240}>
+      <div className="grid lg:grid-cols-2 gap-5">
+        <div className="card p-4">
+          <h2 className="section-title mb-3">Delivery Rate by Campaign</h2>
+          <ResponsiveContainer width="100%" height={220}>
             <BarChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
               <XAxis dataKey="name" tick={{ fontSize: 10, fill: "#64748b" }} />
@@ -117,9 +117,9 @@ export const Analytics = () => {
           </ResponsiveContainer>
         </div>
 
-        <div className="card p-5">
-          <h2 className="section-title mb-4">Rate Trends</h2>
-          <ResponsiveContainer width="100%" height={240}>
+        <div className="card p-4">
+          <h2 className="section-title mb-3">Rate Trends</h2>
+          <ResponsiveContainer width="100%" height={220}>
             <LineChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
               <XAxis dataKey="name" tick={{ fontSize: 10, fill: "#64748b" }} />
@@ -167,7 +167,7 @@ export const Analytics = () => {
 
       {/* Table */}
       <div className="card">
-        <div className="px-5 py-4 border-b border-surface-800">
+        <div className="px-4 py-3 border-b border-[#252d3e]">
           <h2 className="section-title">All Campaigns</h2>
         </div>
         <div className="overflow-x-auto">
@@ -187,7 +187,7 @@ export const Analytics = () => {
                 ].map((h) => (
                   <th
                     key={h}
-                    className="text-left px-4 py-3 text-xs font-medium text-surface-500 uppercase tracking-wider"
+                    className="text-left px-4 py-2.5 text-[11px] font-medium text-surface-500 uppercase tracking-wider bg-surface-900/50"
                   >
                     {h}
                   </th>
@@ -198,14 +198,14 @@ export const Analytics = () => {
               {analytics.map((a) => (
                 <tr
                   key={a.id}
-                  className="hover:bg-surface-800/40 transition-colors"
+                  className="hover:bg-surface-800/30 transition-colors"
                 >
-                  <td className="px-4 py-3">
-                    <p className="text-sm font-medium text-surface-200">
+                  <td className="px-4 py-2">
+                    <p className="text-[13px] font-medium text-surface-200">
                       {a.campaign.name}
                     </p>
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-2 scale-90 origin-left">
                     <StatusBadge
                       label={
                         CHANNEL_LABELS[a.campaign.channel] ?? a.campaign.channel
@@ -214,29 +214,29 @@ export const Analytics = () => {
                       dot={false}
                     />
                   </td>
-                  <td className="px-4 py-3 text-sm text-surface-300">
+                  <td className="px-4 py-2 text-[13px] text-surface-300">
                     {formatNumber(a.totalSent)}
                   </td>
-                  <td className="px-4 py-3 text-sm text-surface-300">
+                  <td className="px-4 py-2 text-[13px] text-surface-300">
                     {formatNumber(a.totalDelivered)}
                   </td>
-                  <td className="px-4 py-3 text-sm text-surface-300">
+                  <td className="px-4 py-2 text-[13px] text-surface-300">
                     {formatNumber(a.totalOpened)}
                   </td>
-                  <td className="px-4 py-3 text-sm text-surface-300">
+                  <td className="px-4 py-2 text-[13px] text-surface-300">
                     {formatNumber(a.totalClicked)}
                   </td>
-                  <td className="px-4 py-3">
-                    <span className="text-sm font-medium text-green-400">
+                  <td className="px-4 py-2">
+                    <span className="text-[13px] font-medium text-green-400">
                       {formatPercent(a.deliveryRate)}
                     </span>
                   </td>
-                  <td className="px-4 py-3">
-                    <span className="text-sm font-medium text-yellow-400">
+                  <td className="px-4 py-2">
+                    <span className="text-[13px] font-medium text-yellow-400">
                       {formatPercent(a.clickRate)}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-sm text-surface-500">
+                  <td className="px-4 py-2 text-[11px] text-surface-500">
                     {formatDate(a.lastUpdatedAt)}
                   </td>
                 </tr>

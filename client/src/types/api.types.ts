@@ -168,6 +168,8 @@ export interface AudienceBuilderResponse {
   warnings: string[];
   customerCount: number;
   sampleCustomers: Partial<Customer>[];
+  isValidAudience?: boolean;
+  message?: string;
 }
 
 export interface AnalyticsWithCampaign extends CampaignAnalytics {

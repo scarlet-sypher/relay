@@ -53,26 +53,26 @@ const KpiCard = ({
 }: KpiCardProps) => {
   if (loading) return <SkeletonCard />;
   return (
-    <div className="card p-5 space-y-3">
+    <div className="card p-4 space-y-2">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium text-surface-500 uppercase tracking-wider">
+        <span className="text-[11px] font-medium text-surface-500 uppercase tracking-wider">
           {label}
         </span>
-        <div className="w-8 h-8 rounded-lg bg-brand-600/10 flex items-center justify-center">
-          <Icon className="w-4 h-4 text-brand-400" />
+        <div className="w-7 h-7 rounded-lg bg-brand-600/10 flex items-center justify-center">
+          <Icon className="w-3.5 h-3.5 text-brand-400" />
         </div>
       </div>
       <div>
-        <p className="text-2xl font-bold text-surface-50">{value}</p>
+        <p className="text-xl font-bold text-surface-50">{value}</p>
         {sub && (
-          <div className="flex items-center gap-1 mt-1">
+          <div className="flex items-center gap-1 mt-0.5">
             {trend === "up" && (
               <TrendingUp className="w-3 h-3 text-green-400" />
             )}
             {trend === "down" && (
               <TrendingDown className="w-3 h-3 text-red-400" />
             )}
-            <p className="text-xs text-surface-500">{sub}</p>
+            <p className="text-[11px] text-surface-500">{sub}</p>
           </div>
         )}
       </div>
@@ -115,20 +115,20 @@ export const Dashboard = () => {
   }));
 
   return (
-    <div className="p-6 space-y-6 animate-fade-in">
+    <div className="p-5 space-y-5 animate-fade-in">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="page-title">Dashboard</h1>
-          <p className="text-sm text-surface-500 mt-0.5">
+          <p className="text-[13px] text-surface-500 mt-0.5">
             Welcome back. Here's what's happening.
           </p>
         </div>
         <button
           onClick={() => setLastRefresh(new Date())}
-          className="btn-ghost text-xs"
+          className="btn-ghost text-[11px]"
         >
-          <RefreshCw className="w-3.5 h-3.5" />
+          <RefreshCw className="w-3 h-3" />
           Refreshed {formatRelativeTime(lastRefresh.toISOString())}
         </button>
       </div>
@@ -168,20 +168,20 @@ export const Dashboard = () => {
       </div>
 
       {/* Chart + Recent Campaigns */}
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-5">
         {/* Chart */}
-        <div className="lg:col-span-2 card p-5">
-          <div className="flex items-center justify-between mb-5">
+        <div className="lg:col-span-2 card p-4">
+          <div className="flex items-center justify-between mb-4">
             <div>
               <h2 className="section-title">Campaign Performance</h2>
-              <p className="text-xs text-surface-500 mt-0.5">
+              <p className="text-[11px] text-surface-500 mt-0.5">
                 Last 7 completed campaigns
               </p>
             </div>
           </div>
           {chartData.length === 0 ? (
-            <div className="h-48 flex items-center justify-center">
-              <p className="text-sm text-surface-600">
+            <div className="h-40 flex items-center justify-center">
+              <p className="text-[13px] text-surface-600">
                 No completed campaigns yet
               </p>
             </div>
@@ -232,46 +232,48 @@ export const Dashboard = () => {
         </div>
 
         {/* Recent Campaigns */}
-        <div className="card p-5">
-          <div className="flex items-center justify-between mb-4">
+        <div className="card p-4">
+          <div className="flex items-center justify-between mb-3">
             <h2 className="section-title">Recent Campaigns</h2>
             <Link
               to="/campaigns"
-              className="text-xs text-brand-400 hover:text-brand-300 flex items-center gap-1"
+              className="text-[11px] text-brand-400 hover:text-brand-300 flex items-center gap-1"
             >
               View all <ArrowRight className="w-3 h-3" />
             </Link>
           </div>
           {campLoading ? (
-            <div className="space-y-3">
+            <div className="space-y-2">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="h-14 rounded-lg shimmer-bg" />
+                <div key={i} className="h-12 rounded-lg shimmer-bg" />
               ))}
             </div>
           ) : campaigns.length === 0 ? (
-            <p className="text-sm text-surface-600 text-center py-8">
+            <p className="text-[13px] text-surface-600 text-center py-6">
               No campaigns yet
             </p>
           ) : (
-            <div className="space-y-2">
+            <div className="space-y-1">
               {campaigns.slice(0, 5).map((c) => (
                 <Link
                   key={c.id}
                   to={`/campaigns/${c.id}`}
-                  className="flex items-center justify-between p-3 rounded-lg hover:bg-surface-800 transition-colors group"
+                  className="flex items-center justify-between p-2.5 rounded-lg hover:bg-surface-800 transition-colors group"
                 >
                   <div className="min-w-0">
-                    <p className="text-sm font-medium text-surface-200 truncate group-hover:text-white">
+                    <p className="text-[13px] font-medium text-surface-200 truncate group-hover:text-white">
                       {c.name}
                     </p>
-                    <p className="text-xs text-surface-500">
+                    <p className="text-[11px] text-surface-500">
                       {CHANNEL_LABELS[c.channel]}
                     </p>
                   </div>
-                  <StatusBadge
-                    label={c.status}
-                    colorClass={CAMPAIGN_STATUS_COLORS[c.status] ?? ""}
-                  />
+                  <div className="scale-90">
+                    <StatusBadge
+                      label={c.status}
+                      colorClass={CAMPAIGN_STATUS_COLORS[c.status] ?? ""}
+                    />
+                  </div>
                 </Link>
               ))}
             </div>
@@ -280,47 +282,47 @@ export const Dashboard = () => {
       </div>
 
       {/* Bottom row */}
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         {/* Recent Customers */}
-        <div className="card p-5">
-          <div className="flex items-center justify-between mb-4">
+        <div className="card p-4">
+          <div className="flex items-center justify-between mb-3">
             <h2 className="section-title">Recent Customers</h2>
             <Link
               to="/customers"
-              className="text-xs text-brand-400 hover:text-brand-300 flex items-center gap-1"
+              className="text-[11px] text-brand-400 hover:text-brand-300 flex items-center gap-1"
             >
               View all <ArrowRight className="w-3 h-3" />
             </Link>
           </div>
           {cLoading ? (
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               {[1, 2, 3].map((i) => (
                 <div key={i} className="h-10 rounded shimmer-bg" />
               ))}
             </div>
           ) : (
-            <div className="space-y-1">
+            <div className="space-y-0.5">
               {customers.slice(0, 5).map((c) => (
                 <Link
                   key={c.id}
                   to={`/customers/${c.id}`}
-                  className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-surface-800 transition-colors"
+                  className="flex items-center gap-2.5 p-2 rounded-lg hover:bg-surface-800 transition-colors"
                 >
-                  <div className="w-8 h-8 rounded-full bg-brand-600/20 flex items-center justify-center shrink-0">
-                    <span className="text-xs font-bold text-brand-400">
+                  <div className="w-7 h-7 rounded-full bg-brand-600/20 flex items-center justify-center shrink-0">
+                    <span className="text-[11px] font-bold text-brand-400">
                       {c.firstName[0]}
                       {c.lastName[0]}
                     </span>
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium text-surface-200 truncate">
+                    <p className="text-[13px] font-medium text-surface-200 truncate">
                       {c.firstName} {c.lastName}
                     </p>
-                    <p className="text-xs text-surface-500 truncate">
+                    <p className="text-[11px] text-surface-500 truncate">
                       {c.email}
                     </p>
                   </div>
-                  <span className="text-xs text-surface-500 shrink-0">
+                  <span className="text-[11px] text-surface-500 shrink-0">
                     {formatCurrency(c.totalSpend)}
                   </span>
                 </Link>
@@ -330,47 +332,47 @@ export const Dashboard = () => {
         </div>
 
         {/* Segments */}
-        <div className="card p-5">
-          <div className="flex items-center justify-between mb-4">
+        <div className="card p-4">
+          <div className="flex items-center justify-between mb-3">
             <h2 className="section-title">Audience Segments</h2>
             <Link
               to="/segments"
-              className="text-xs text-brand-400 hover:text-brand-300 flex items-center gap-1"
+              className="text-[11px] text-brand-400 hover:text-brand-300 flex items-center gap-1"
             >
               View all <ArrowRight className="w-3 h-3" />
             </Link>
           </div>
           {segLoading ? (
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="h-14 rounded shimmer-bg" />
+                <div key={i} className="h-12 rounded shimmer-bg" />
               ))}
             </div>
           ) : segments.length === 0 ? (
-            <p className="text-sm text-surface-600 text-center py-8">
+            <p className="text-[13px] text-surface-600 text-center py-6">
               No segments yet
             </p>
           ) : (
-            <div className="space-y-2">
+            <div className="space-y-1">
               {segments.slice(0, 4).map((s) => (
                 <Link
                   key={s.id}
                   to={`/segments/${s.id}`}
-                  className="flex items-center justify-between p-3 rounded-lg hover:bg-surface-800 transition-colors"
+                  className="flex items-center justify-between p-2.5 rounded-lg hover:bg-surface-800 transition-colors"
                 >
                   <div className="min-w-0">
-                    <p className="text-sm font-medium text-surface-200 truncate">
+                    <p className="text-[13px] font-medium text-surface-200 truncate">
                       {s.name}
                     </p>
-                    <p className="text-xs text-surface-500">
+                    <p className="text-[11px] text-surface-500">
                       {s.description ?? "No description"}
                     </p>
                   </div>
-                  <div className="text-right shrink-0 ml-4">
-                    <p className="text-sm font-semibold text-surface-100">
+                  <div className="text-right shrink-0 ml-3">
+                    <p className="text-[13px] font-semibold text-surface-100">
                       {formatNumber(s.customerCount)}
                     </p>
-                    <p className="text-xs text-surface-600">customers</p>
+                    <p className="text-[11px] text-surface-600">customers</p>
                   </div>
                 </Link>
               ))}

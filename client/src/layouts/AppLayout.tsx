@@ -10,8 +10,8 @@ export const AppLayout = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden bg-surface-950">
-      {/* <Topbar toggleSidebar={toggleSidebar} /> */}
+    <div className="flex flex-col h-screen overflow-hidden bg-[#0d1117]">
+      <Topbar toggleSidebar={toggleSidebar} />
 
       {/* Main content area */}
       <div className="flex flex-1 min-w-0 overflow-hidden relative">
