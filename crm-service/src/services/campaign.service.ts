@@ -52,11 +52,32 @@ export const campaignService = {
         email: true,
         phone: true,
         firstName: true,
+        lastOrderAt: true,
+        orders: {
+          select: { productCategory: true },
+          orderBy: { createdAt: "desc" },
+          take: 1
+        }
       },
     });
 
-    const resolveMessage = (messageBody: string, firstName: string): string => {
-      return messageBody.replace(/{{first_name}}/g, firstName);
+    const resolveMessage = (messageBody: string, customer: any): string => {
+      let msg = messageBody.replace(/\[First Name\]/gi, customer.firstName);
+      
+      const lastOrderStr = customer.lastOrderAt 
+        ? new Date(customer.lastOrderAt).toLocaleDateString() 
+        : 'recently';
+      msg = msg.replace(/\[Last Order Date\]/gi, lastOrderStr);
+      
+      const favoriteCat = customer.orders?.[0]?.productCategory || 'our premium products';
+      msg = msg.replace(/\[Favorite Category\]/gi, favoriteCat);
+      
+      // Fallback for old templates
+      msg = msg.replace(/{{first_name}}/gi, customer.firstName);
+      msg = msg.replace(/{{last_order_date}}/gi, lastOrderStr);
+      msg = msg.replace(/{{favorite_product_category}}/gi, favoriteCat);
+      
+      return msg;
     };
 
     const resolveAddress = (
@@ -76,7 +97,7 @@ export const campaignService = {
           customerId: customer.id,
           channel: campaign.channel,
           recipientAddress: address,
-          messageBody: resolveMessage(campaign.messageBody, customer.firstName),
+          messageBody: resolveMessage(campaign.messageBody, customer),
         };
       })
       .filter((c): c is NonNullable<typeof c> => c !== null);

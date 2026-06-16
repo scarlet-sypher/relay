@@ -346,7 +346,7 @@ interface CohortProfile {
 const COHORT_PROFILES: CohortProfile[] = [
   {
     name: "loyal",
-    count: 150,
+    count: 75,
     minOrders: 8,
     maxOrders: 18,
     minSpendPerOrder: 600,
@@ -358,7 +358,7 @@ const COHORT_PROFILES: CohortProfile[] = [
   },
   {
     name: "high_value",
-    count: 100,
+    count: 50,
     minOrders: 5,
     maxOrders: 12,
     minSpendPerOrder: 1500,
@@ -370,7 +370,7 @@ const COHORT_PROFILES: CohortProfile[] = [
   },
   {
     name: "at_risk",
-    count: 200,
+    count: 100,
     minOrders: 3,
     maxOrders: 7,
     minSpendPerOrder: 400,
@@ -382,7 +382,7 @@ const COHORT_PROFILES: CohortProfile[] = [
   },
   {
     name: "churned",
-    count: 200,
+    count: 100,
     minOrders: 2,
     maxOrders: 5,
     minSpendPerOrder: 300,
@@ -394,7 +394,7 @@ const COHORT_PROFILES: CohortProfile[] = [
   },
   {
     name: "new",
-    count: 200,
+    count: 100,
     minOrders: 1,
     maxOrders: 2,
     minSpendPerOrder: 350,
@@ -406,7 +406,7 @@ const COHORT_PROFILES: CohortProfile[] = [
   },
   {
     name: "occasional",
-    count: 150,
+    count: 75,
     minOrders: 2,
     maxOrders: 5,
     minSpendPerOrder: 300,
@@ -417,7 +417,6 @@ const COHORT_PROFILES: CohortProfile[] = [
     preferredChannelWeights: [40, 30, 30],
   },
 ];
-
 /*
 |--------------------------------------------------------------------------
 | Helpers
@@ -507,7 +506,7 @@ const HISTORICAL_CAMPAIGNS: HistoricalCampaign[] = [
     name: "Monsoon Skincare Sale",
     channel: "WHATSAPP",
     messageBody:
-      "Hey {{first_name}}! 🌧️ Monsoon is here and your skin needs extra care. Get 20% off on our bestselling Moisturiser and Sunscreen this week. Shop now before stocks run out!",
+      "Hey [First Name]! 🌧️ Monsoon is here and your skin needs extra care. Get 20% off on our bestselling Moisturiser and Sunscreen this week. Shop now before stocks run out!",
     segmentName: "All Active Customers",
     daysAgoSent: 45,
     targetCohorts: ["loyal", "high_value", "occasional"],
@@ -517,7 +516,7 @@ const HISTORICAL_CAMPAIGNS: HistoricalCampaign[] = [
     name: "Win-Back: 30-Day Inactive",
     channel: "SMS",
     messageBody:
-      "Hi {{first_name}}, we miss you! It's been a while since your last order. Come back and enjoy ₹200 off your next purchase. Use code COMEBACK200.",
+      "Hi [First Name], we miss you! It's been a while since your last order. Come back and enjoy ₹200 off your next purchase. Use code COMEBACK200.",
     segmentName: "At-Risk Customers",
     daysAgoSent: 30,
     targetCohorts: ["at_risk"],
@@ -527,7 +526,7 @@ const HISTORICAL_CAMPAIGNS: HistoricalCampaign[] = [
     name: "VIP Early Access — Vitamin C Launch",
     channel: "EMAIL",
     messageBody:
-      "Dear {{first_name}}, as one of our most valued customers, you get exclusive early access to our new Vitamin C Serum before it goes live. Click below to shop now.",
+      "Dear [First Name], as one of our most valued customers, you get exclusive early access to our new Vitamin C Serum before it goes live. Click below to shop now.",
     subjectLine: "Your exclusive early access is here ✨",
     segmentName: "High-Value Customers",
     daysAgoSent: 20,
@@ -538,7 +537,7 @@ const HISTORICAL_CAMPAIGNS: HistoricalCampaign[] = [
     name: "Welcome Series — New Customers",
     channel: "WHATSAPP",
     messageBody:
-      "Welcome to Aura Beauty, {{first_name}}! 🌸 Thank you for your first order. Here's a little gift — use WELCOME15 for 15% off your next purchase. We can't wait to see you glow!",
+      "Welcome to Aura Beauty, [First Name]! 🌸 Thank you for your first order. Here's a little gift — use WELCOME15 for 15% off your next purchase. We can't wait to see you glow!",
     segmentName: "New Customers",
     daysAgoSent: 14,
     targetCohorts: ["new"],
@@ -548,8 +547,8 @@ const HISTORICAL_CAMPAIGNS: HistoricalCampaign[] = [
     name: "Re-engagement: Churned Customers",
     channel: "EMAIL",
     messageBody:
-      "Hi {{first_name}}, it's been a few months and we've been thinking about you. A lot has changed at Aura — new products, new formulas. Come back and see what you've been missing.",
-    subjectLine: "We've missed you, {{first_name}} 💛",
+      "Hi [First Name], it's been a few months and we've been thinking about you. A lot has changed at Aura — new products, new formulas. Come back and see what you've been missing.",
+    subjectLine: "We've missed you, [First Name] 💛",
     segmentName: "Churned Customers",
     daysAgoSent: 10,
     targetCohorts: ["churned"],
@@ -559,7 +558,7 @@ const HISTORICAL_CAMPAIGNS: HistoricalCampaign[] = [
     name: "Loyalty Rewards Announcement",
     channel: "WHATSAPP",
     messageBody:
-      "Hey {{first_name}}! 🏆 You've been amazing. As a loyal Aura customer, you've earned 500 reward points this month. Redeem them on your next order for a surprise discount!",
+      "Hey [First Name]! 🏆 You've been amazing. As a loyal Aura customer, you've earned 500 reward points this month. Redeem them on your next order for a surprise discount!",
     segmentName: "Loyal Customers",
     daysAgoSent: 7,
     targetCohorts: ["loyal"],
@@ -1113,7 +1112,7 @@ const seed = async (): Promise<void> => {
           : (customer.phone ?? customer.email);
 
       const personalizedMessage = campaignDef.messageBody.replace(
-        /{{first_name}}/g,
+        /\[First Name\]/g,
         customer.firstName,
       );
 

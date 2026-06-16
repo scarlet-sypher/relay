@@ -68,6 +68,10 @@ const buildWhereClause = (rules: FilterRules): Record<string, unknown> => {
 export const executeSegmentFilter = async (
   rules: FilterRules,
 ): Promise<{ count: number; sampleCustomers: unknown[] }> => {
+  if (!rules?.conditions?.length) {
+    return { count: 0, sampleCustomers: [] };
+  }
+
   const where = buildWhereClause(rules);
 
   const [count, sampleCustomers] = await Promise.all([
@@ -94,6 +98,10 @@ export const executeSegmentFilter = async (
 export const getCustomerIdsForSegment = async (
   rules: FilterRules,
 ): Promise<string[]> => {
+  if (!rules?.conditions?.length) {
+    return [];
+  }
+
   const where = buildWhereClause(rules);
 
   const customers = await prisma.customer.findMany({

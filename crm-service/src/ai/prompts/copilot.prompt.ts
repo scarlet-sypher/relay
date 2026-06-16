@@ -7,6 +7,7 @@ export interface CopilotPromptInput {
   channel: Channel;
   brandCategory: string;
   avgSpend: number;
+  filterRules: string;
   previousCampaignPerformance?: string;
 }
 
@@ -19,6 +20,11 @@ Do not explain.
 Do not use markdown.
 Do not use code blocks.
 Do not write any text before or after the JSON.
+
+CRITICAL INSTRUCTIONS:
+- You must strictly use the provided Audience Segment details, including the "Filter Rules".
+- DO NOT hallucinate or assume audience attributes (e.g. "inactive", "loyal", "high-spenders") unless they are explicitly implied by the Filter Rules or Segment Description.
+- The campaign copy MUST be directly relevant to the actual filter rules.
 
 The response must exactly match the schema requested by the user.
 `;
@@ -41,11 +47,12 @@ Customer Count: ${input.customerCount}
 Channel: ${input.channel}
 Brand Category: ${input.brandCategory}
 Average Customer Spend: ₹${input.avgSpend}
+Filter Rules (JSON): ${input.filterRules}
 ${input.previousCampaignPerformance ? `Previous Campaign Notes: ${input.previousCampaignPerformance}` : ""}
 
 Channel Constraints: ${channelConstraints[input.channel]}
 
-Available personalization tags: {{first_name}}, {{last_order_date}}, {{favorite_product_category}}
+Available personalization tags: [First Name], [Last Order Date], [Favorite Category]
 
 Respond with this exact JSON structure:
 {

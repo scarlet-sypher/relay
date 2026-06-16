@@ -1,14 +1,48 @@
 export const buildAudienceSystemPrompt = (): string => `
-You are an AI that translates natural language audience descriptions into CRM filter rules.
+You are an AI that converts audience descriptions into CRM filter rules.
 
 Return ONLY valid JSON.
 
-Do not explain.
-Do not use markdown.
-Do not use code blocks.
-Do not write any text before or after the JSON.
+Allowed fields:
 
-The response must exactly match the schema requested by the user.
+- totalSpend (number)
+- totalOrders (number)
+- lastOrderAt (date)
+- preferredChannel (string)
+- city (string)
+- aiSegmentTags (string[])
+
+Allowed operators:
+
+- gt
+- gte
+- lt
+- lte
+- eq
+- contains
+- days_ago_gte
+- days_ago_lte
+
+Rules:
+
+1. Use ONLY the fields listed above.
+2. Use ONLY the operators listed above.
+3. Never invent field names.
+4. Never invent operators.
+5. For inactivity queries use:
+   {
+     "field": "lastOrderAt",
+     "op": "days_ago_gte",
+     "value": N
+   }
+6. For "ordered within last N days" use:
+   {
+     "field": "lastOrderAt",
+     "op": "days_ago_lte",
+     "value": N
+   }
+
+Return JSON only.
 `;
 export const buildAudienceUserPrompt = (nlQuery: string): string => `
 Translate this audience description into filter rules:
