@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { cn } from "../utils";
 
@@ -19,7 +19,35 @@ const trustBrands = [
 
 export const LandingPage = () => {
   const [isEntering, setIsEntering] = useState(false);
+  const [backendsReady, setBackendsReady] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const checkBackends = async () => {
+      try {
+        const [crmRes, channelRes] = await Promise.all([
+          fetch("https://relay-crm-np5w.onrender.com/api/health").catch(() => null),
+          fetch("https://relay-channel.onrender.com/api/health").catch(() => null)
+        ]);
+
+        if (isMounted && crmRes?.ok && channelRes?.ok) {
+          setBackendsReady(true);
+        } else if (isMounted) {
+          setTimeout(checkBackends, 3000);
+        }
+      } catch (err) {
+        if (isMounted) setTimeout(checkBackends, 3000);
+      }
+    };
+
+    checkBackends();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const handleEnter = () => {
     setIsEntering(true);
@@ -189,13 +217,45 @@ export const LandingPage = () => {
               ))}
             </div>
 
-            <button
-              onClick={handleEnter}
-              className="bg-[#6c63ff] hover:bg-[#8b82ff] hover:scale-[1.04] text-white border-none rounded-[10px] px-7 py-3 text-[0.95rem] font-bold cursor-pointer flex items-center gap-2 shadow-[0_0_32px_rgba(108,99,255,0.35)] transition-all duration-200 mb-2"
-            >
-              Enter Relay Workspace
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-            </button>
+            <div className="relative group mb-2 inline-block">
+              <button
+                onClick={(e) => {
+                  if (backendsReady) {
+                    handleEnter();
+                  } else {
+                    e.preventDefault();
+                  }
+                }}
+                className={cn(
+                  "border-none rounded-[10px] px-7 py-3 text-[0.95rem] font-bold flex items-center justify-center gap-2 transition-all duration-200 min-w-[220px]",
+                  backendsReady 
+                    ? "bg-[#6c63ff] hover:bg-[#8b82ff] hover:scale-[1.04] text-white cursor-pointer shadow-[0_0_32px_rgba(108,99,255,0.35)]" 
+                    : "bg-[#252d3e] text-[#8892a4] cursor-not-allowed opacity-90"
+                )}
+              >
+                {!backendsReady ? (
+                  <>
+                    <svg className="animate-spin -ml-1 mr-1 h-4 w-4 text-[#8b82ff]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Waking up servers...
+                  </>
+                ) : (
+                  <>
+                    Enter Relay Workspace
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                  </>
+                )}
+              </button>
+              
+              {!backendsReady && (
+                <div className="absolute -top-12 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none bg-[#1e2635] border border-[#252d3e] text-[#f0f4ff] text-[0.75rem] px-3 py-1.5 rounded-lg whitespace-nowrap shadow-[0_4px_20px_rgba(0,0,0,0.5)] z-10">
+                  Backend is loading... Free tier may take ~50s
+                  <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-[#1e2635] border-r border-b border-[#252d3e] rotate-45"></div>
+                </div>
+              )}
+            </div>
 
             <div className="text-[0.72rem] text-[#5a6475] flex items-center gap-1.5">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-[12px] h-[12px] text-[#6c63ff]"><circle cx="12" cy="12" r="10" /><path d="M12 8v4l3 3" /></svg>
